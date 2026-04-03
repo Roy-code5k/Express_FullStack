@@ -4,13 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Management | MVC App</title>
     <link rel="stylesheet" href="/stylesheet/sample.css">
-    <script src="/js/index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>This is comming from ejs</h1>
+    <!-- Animated background particles -->
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">&#9670;</span>
+                <h1>User Management</h1>
+            </div>
+            <p class="subtitle">Create and manage users stored in MongoDB</p>
+        </header>
+
+        <div class="content-grid">
+            <!-- Create User Form Card -->
+            <section class="card form-card" id="create-user-section">
+                <div class="card-header">
+                    <span class="card-icon">+</span>
+                    <h2>Create New User</h2>
+                </div>
+                <form action="/app/v1/create" method="POST" class="user-form" id="create-user-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submit-btn">
+                        <span class="btn-text">Create User</span>
+                        <span class="btn-icon">&rarr;</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Users List Card -->
+            <section class="card users-card" id="users-list-section">
+                <div class="card-header">
+                    <span class="card-icon">&#128101;</span>
+                    <h2>All Users <span class="user-count"><%= users.length %></span></h2>
+                </div>
+
+                <% if (users.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">&#128237;</div>
+                        <p>No users found yet.</p>
+                        <p class="empty-hint">Create your first user using the form!</p>
+                    </div>
+                <% } else { %>
+                    <div class="users-list" id="users-list">
+                        <% for (let i = 0; i < users.length; i++) { %>
+                            <% const user = users[i]; %>
+                            <div class="user-row">
+                                <div class="user-avatar">
+                                    <%= user.username ? user.username.charAt(0).toUpperCase() : '?' %>
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name"><%= user.username || 'No username' %></span>
+                                    <span class="user-email"><%= user.email || 'No email' %></span>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge">User</span>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with <span class="heart">&hearts;</span> using Express, EJS &amp; MongoDB</p>
+        </footer>
+    </div>
+
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

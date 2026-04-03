@@ -29,12 +29,11 @@ app.use(express.static(path.join(__dirname, "public")));//helps to serve static 
 
 
 connectToMongoDB().then(async () => {
-    console.log("Db is connected successfully ")
+    console.log("Db is connected successfully ");
     await seedUserData();
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
 }).catch((err) => {
-    console.log(err)
-})
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log("Failed to connect to MongoDB:", err);
 });
